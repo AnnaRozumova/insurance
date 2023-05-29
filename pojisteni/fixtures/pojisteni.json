@@ -1,0 +1,1 @@
+[{"model": "pojisteni.pojisteni", "pk": 1, "fields": {"id_pojistence": 1, "nazev": 1, "predmet": "zdravi", "datum_smlouvy": "2023-05-20", "platnost_od": "2023-06-01", "platnost_do": "2024-06-01", "pojistna_osoba": "Ondrej Rozum"}}]

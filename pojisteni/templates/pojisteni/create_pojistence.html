@@ -1,0 +1,12 @@
+{% extends 'pojisteni/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form_1 }}
+    <input type="submit">
+</form>
+</body>
+</html>
+{% endblock %}

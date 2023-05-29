@@ -1,0 +1,28 @@
+{% extends 'pojisteni/base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Pojistence</h1>
+    <p class="new-button">
+        <a href="{% url 'create_pojistence' %}">Novy pojistenec</a> 
+    </p> 
+    <table>
+        <thead>
+            <tr>
+                <th>Jmeno</th>
+                <th>Bydliste</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pojistenec in pojistence %}
+            <tr>
+                <td>{{pojistenec.jmeno}} {{pojistenec.prijmeni}}</td>
+                <td>{{pojistenec.adresa}}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}
