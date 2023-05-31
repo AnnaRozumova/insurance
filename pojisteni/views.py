@@ -1,9 +1,10 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.views import generic
-from pojisteni.forms import PojistenceForm, PojisteniForm
-from pojisteni.models import Pojistence
+from django.contrib.auth import login, logout, authenticate
+from pojisteni.forms import PojistenceForm, PojisteniForm, UzivatelForm, LoginForm
+from pojisteni.models import Pojistence, Uzivatel
 
 # Create your views here.
 
@@ -55,3 +56,48 @@ class PojistenceIndex(generic.ListView):
 
     def get_queryset(self):
         return Pojistence.objects.all().order_by('id_pojistence')
+    
+class UzivatelViewRegister(generic.edit.CreateView):
+    form_class = UzivatelForm
+    model = Uzivatel
+    template_name = 'pojisteni/user_form.html'
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form':form})
+    
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            uzivatel = form.save(commit = False)
+            password = form.cleaned_data['password']
+            uzivatel.set_password(password)
+            uzivatel.save()
+            login(request, uzivatel)
+            return redirect('about')
+        
+        return render(request, self.template_name, {'form':form})
+    
+
+class UzivatelViewLogin(generic.edit.CreateView):
+    form_class = LoginForm
+    template_name = 'pojisteni/user_form.html'
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form':form})
+    
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(email = email, password = password)
+            if user:
+                login(request, user)
+                return redirect('about')
+        return render(request, self.template_name, {'form':form})
+    
+def logout_user(request):
+    logout(request)
+    return redirect(reverse('login'))

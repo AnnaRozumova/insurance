@@ -78,6 +78,9 @@ table {
 thead, tbody {
     border-collapse: collapse;
 }
+td {
+    border-collapse: collapse;
+}
 th {
     font-weight: bold;
 }

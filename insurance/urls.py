@@ -26,4 +26,7 @@ urlpatterns = [
     path('create_pojisteni/', views.CreatePojisteni.as_view(), name='create_pojisteni'),
     path('pojistence/', views.PojistenceIndex.as_view(), name='pojistence'),
     path('pojisteni/', views.pojisteni, name='pojisteni'),
+    path('register/', views.UzivatelViewRegister.as_view(), name='register'),
+    path('login/', views.UzivatelViewLogin.as_view(), name='login'),
+    path('logout/', views.logout_user, name='logout'),
 ]
